@@ -2,33 +2,37 @@
 
 import HistoricalTable from "./HistoricalTable";
 import HisotricalGraph from "./HisotricalGraph";
-import { getHistoricalData, HistoricalData } from "@/apis/analytics/get";
-import { useEffect, useState } from "react";
+import { getHistoricalData } from "@/apis/analytics/get";
+import { useState } from "react";
 import HistoricalLineGraph from "./HistoricalLineGraph";
+import { useQuery } from "@tanstack/react-query";
 
 const ticker1 = "AAPL";
 const ticker2 = "MSFT";
 
 export default function Analytics() {
-  const [list, setList] = useState<HistoricalData[]>([]);
   const [ticker, setTicker] = useState("AAPL");
 
-  useEffect(() => {
-    getHistoricalData(ticker).then((data) => setList(data));
-  }, [ticker]);
-
-  useEffect(() => {
-    console.log(list)
-  }, [list]);
+  const { error, data, isLoading } = useQuery({
+    queryKey: [ticker],
+    queryFn: async () => await getHistoricalData(ticker),
+    staleTime: 3000,
+  });
 
   const handleClick = (ticker: string) => {
     setTicker(ticker);
   };
 
+  if (isLoading) return "Loading...";
+
+  if (error) return "Error fetching data.\n Please try again."; 
+
   return (
     <main className="px-16">
       <div className="flex justify-between items-center mb-3">
-      <p className="text-4xl font-semibold">Historical Data <span className="font-normal italic">{ticker}</span></p>
+        <p className="text-4xl font-semibold">
+          Historical Data <span className="font-normal italic">{ticker}</span>
+        </p>
         <div>
           <button
             onClick={() => handleClick(ticker1)}
@@ -52,9 +56,9 @@ export default function Analytics() {
           </button>
         </div>
       </div>
-      <HistoricalLineGraph list={list} ticker={ticker}/>
-      <HisotricalGraph list={list} ticker={ticker}/>
-      <HistoricalTable list={list}/>
+      <HistoricalLineGraph list={data ?? []} ticker={ticker} />
+      <HisotricalGraph list={data ?? []} ticker={ticker} />
+      <HistoricalTable list={data ?? []} />
     </main>
   );
 }
