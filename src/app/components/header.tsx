@@ -109,9 +109,9 @@ export default function Header() {
           <Link href="/marketplace" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
             Marketplace
           </Link>
-          <Link href="/analytics" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
+          {/* <Link href="/analytics/AAPL" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
             Analytics
-          </Link>
+          </Link> */}
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
@@ -162,23 +162,23 @@ export default function Header() {
                   </DisclosurePanel>
                 </Disclosure>
                 <a
-                  href="#"
+                  href="/features"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900  dark:text-gray-400 hover:bg-gray-50"
                 >
                   Features
                 </a>
                 <a
-                  href="#"
+                  href="/marketplace"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-400 hover:bg-gray-50"
                 >
                   Marketplace
                 </a>
-                <a
-                  href="#"
+                {/* <a
+                  href="/analytics/AAPL"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900  dark:text-gray-400 hover:bg-gray-50"
                 >
                   Analytics
-                </a>
+                </a> */}
               </div>
               <div className="py-6">
                 <a

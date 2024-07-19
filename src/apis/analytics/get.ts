@@ -14,7 +14,7 @@ export const getHistoricalData = async (
 ): Promise<Array<HistoricalData>> => {
 
   const res = await fetch(
-    process.env.NEXT_PUBLIC_LINK + ticker
+    process.env.NEXT_PUBLIC_ANALYTICS_LINK + ticker
   );
   const data = await res.json();
 

@@ -1,5 +1,5 @@
-import Table from "../components/table/table";
-import { TableColumnDefs } from "../components/table/types";
+import Table from "../../components/table/table";
+import { TableColumnDefs } from "../../components/table/types";
 import { HistoricalData } from "@/apis/analytics/get";
 
 const columns: TableColumnDefs = [
