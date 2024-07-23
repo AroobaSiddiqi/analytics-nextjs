@@ -12,7 +12,7 @@ import Link from "next/link";
 export default function Marketplace() {
   const gridRef = useRef(null);
 
-  const { error, data, isLoading } = useQuery({
+  const { error, data, isFetching } = useQuery({
     queryKey: ["marketplace"],
     queryFn: async () => await getMarketplaceData(),
     staleTime: 3000,
@@ -81,7 +81,7 @@ export default function Marketplace() {
     suppressSizeToFit: true,
   };
 
-  if (isLoading) return "Loading...";
+  if (isFetching) return "Loading...";
 
   if (error) return "Error fetching data.\n Please try again.";
 
