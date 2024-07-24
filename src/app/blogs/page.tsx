@@ -3,8 +3,9 @@
 import BlogCard from "./BlogCard";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogData } from "@/apis/blogs/get";
+import isAuth from "@/Auth/isAuth";
 
-export default function Blogs() {
+function Blogs() {
   
   const { error, data, isFetching } = useQuery({
     queryKey: ["blogs"],
@@ -23,4 +24,6 @@ export default function Blogs() {
       ))}
     </main>  
     );
-  }
+  };
+
+  export default isAuth(Blogs);

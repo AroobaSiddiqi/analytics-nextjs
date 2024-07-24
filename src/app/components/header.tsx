@@ -1,5 +1,8 @@
 'use client'
 
+import { Button } from "@/components/ui/button"
+import { User } from 'firebase/auth'; 
+
 import { useState } from 'react'
 import {
   Dialog,
@@ -23,6 +26,12 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
+import { authFirebase } from "@/Auth/Firebase"
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from 'react'
+
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -37,7 +46,37 @@ const callsToAction = [
 ]
 
 export default function Header() {
+  
+  const [user, setUser] = useState<User | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(authFirebase, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleClick = async () => {
+    try {
+      await signOut(authFirebase);
+      router.push("/");
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <header className="bg-white rounded-lg shadow dark:bg-gray-900 m-4">
@@ -103,8 +142,8 @@ export default function Header() {
             </PopoverPanel>
           </Popover>
 
-          <Link href="/features" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
-            Features
+          <Link href="/blogs" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
+            Blogs
           </Link>
           <Link href="/marketplace" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
             Marketplace
@@ -114,9 +153,10 @@ export default function Header() {
           </Link> */}
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
+          {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900  dark:text-gray-400">
             Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          </a> */}
+          <Button onClick={handleClick} variant="outline">Log out</Button>
         </div>
       </nav>
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -162,10 +202,10 @@ export default function Header() {
                   </DisclosurePanel>
                 </Disclosure>
                 <a
-                  href="/features"
+                  href="/blogs"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900  dark:text-gray-400 hover:bg-gray-50"
                 >
-                  Features
+                  Blogs
                 </a>
                 <a
                   href="/marketplace"
@@ -181,12 +221,13 @@ export default function Header() {
                 </a> */}
               </div>
               <div className="py-6">
-                <a
+                {/* <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900  dark:text-gray-400 hover:bg-gray-50"
                 >
                   Log in
-                </a>
+                </a> */}
+                <Button onClick={handleClick} variant="outline">Log out</Button>
               </div>
             </div>
           </div>

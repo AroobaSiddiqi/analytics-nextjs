@@ -8,8 +8,10 @@ import { ColDef, ColGroupDef, ICellRendererParams } from "ag-grid-community";
 import { useQuery } from "@tanstack/react-query";
 import { getMarketplaceData, MarketplaceData } from "@/apis/marketplace/get";
 import Link from "next/link";
+import isAuth from "@/Auth/isAuth";
 
-export default function Marketplace() {
+function Marketplace() {
+ 
   const gridRef = useRef(null);
 
   const { error, data, isFetching } = useQuery({
@@ -96,4 +98,7 @@ export default function Marketplace() {
       />
     </div>
   );
-}
+};
+
+
+export default isAuth(Marketplace);

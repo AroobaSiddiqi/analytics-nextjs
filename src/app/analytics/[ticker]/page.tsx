@@ -13,12 +13,14 @@ import {
   ComboboxOptions,
 } from "@headlessui/react";
 import { useState } from "react";
+import isAuth from "@/Auth/isAuth";
 
 type props = {
   params: { ticker: string };
 };
 
-export default function TickerPage({ params: { ticker } }: props) {
+function TickerPage({ params: { ticker } }: props) {
+  
   const [query, setQuery] = useState("");
 
   const {
@@ -122,3 +124,5 @@ export default function TickerPage({ params: { ticker } }: props) {
     </main>
   );
 }
+
+export default isAuth(TickerPage);
