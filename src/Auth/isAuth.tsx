@@ -17,7 +17,7 @@ export default function isAuth(Component: any) {
         } else {
           // User is signed out.
           setUser(null);
-          router.push("/login");
+          router.push("/signup");
         }
       });
 
