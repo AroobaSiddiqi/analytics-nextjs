@@ -79,10 +79,10 @@ export default function Header() {
   }
 
   return (
-    <header className="mx-12">
+    <header className="">
       {/* shadow rounded-lg dark:bg-gray-900 */}
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-        <div className="flex lg:flex-1">
+      <nav aria-label="Global" className="mt-6 mb-2 mx-4 flex max-w-7xl items-center justify-between ">
+        <div className="flex lg:flex-1 p-6 lg:px-8">
           {/* <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img alt="" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" className="h-8 w-auto" />
