@@ -14,7 +14,7 @@ export default function Example() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl py-28">
+    <div className="mx-auto max-w-2xl py-20">
       <div className="hidden sm:mb-8 sm:flex sm:justify-center">
         <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-100/10 hover:ring-gray-100/30">
           Want to read our blogs to get an idea of what we offer ?{" "}

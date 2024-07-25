@@ -228,7 +228,7 @@ export default function Header() {
                 >
                   Log in
                 </a> */}
-                <Button onClick={handleClick} variant="outline">Log out</Button>
+                <Button onClick={handleClick} className="hover:bg-gray-900 bg-gray-800 text-gray-50 border-x border-y border-gray-100">Log out</Button>
               </div>
             </div>
           </div>
