@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authFirebase } from "@/Auth/Firebase";
 import { useRouter } from "next/navigation";
+import { event } from "@/GoogleAnalytics/GoogleAnalytics";
 
 interface FormData {
   email: string;
@@ -18,15 +19,24 @@ export default function Login() {
     router.push("/signup");
   };
 
+  const trackLogin = () => {
+    event({
+      action: "login",
+      category: "User Authentication",
+      label: "Successful Login",
+    });
+  };
+
   const onSubmit = async (data: FormData) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         authFirebase,
         data.email,
         data.password
-      );
-      const user = userCredential.user;
-      router.push("/blogs");
+      ).then(() => {
+        trackLogin();
+        router.push("/blogs");
+      });
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = error.message;

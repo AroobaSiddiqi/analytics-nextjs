@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { authFirebase } from "@/Auth/Firebase";
 import { useRouter } from "next/navigation";
+import { event } from "@/GoogleAnalytics/GoogleAnalytics";
 
 interface FormData {
   email: string;
@@ -14,16 +15,25 @@ export default function SignUp() {
   const { register, handleSubmit } = useForm<FormData>();
   const router = useRouter();
 
+  const trackCreateAccount = () => {
+    event({
+      action: "create_account",
+      category: "User Authentication",
+      label: "Account Created",
+      value: 1,
+    });
+  };
+
   const onSubmit = async (data: FormData) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         authFirebase,
         data.email,
         data.password
-      );
-      const user = userCredential.user;
-      console.log(user);
-      router.push("/blogs");
+      ).then(() => {
+        trackCreateAccount();
+        router.push("/blogs");
+      });
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = error.message;

@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "./components/providers/ThemeProvider";
+import {GoogleAnalytics} from "@/GoogleAnalytics/GoogleAnalytics";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -18,7 +19,7 @@ const fontSans = FontSans({
 const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-roboto",
-  weight: ["400","500"],
+  weight: ["400", "500"],
 });
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+   <GoogleAnalytics/>
       <body
         className={cn(
           "min-h-screen mx-12 bg-background font-sans antialiased",
@@ -39,19 +41,20 @@ export default function RootLayout({
           inter.className
         )}
       >
-         <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          ><QueryClientProvider client={queryClient}>
-          <Header />
-          <div className="p-4 min-h-screen flex flex-col justify-between">
-            {children}
-          </div>
-          <Footer />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryClientProvider client={queryClient}>
+            <Header />
+            <div className="p-4 min-h-screen flex flex-col justify-between">
+              {children}
+            </div>
+            <Footer />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
         </ThemeProvider>
       </body>
     </html>
